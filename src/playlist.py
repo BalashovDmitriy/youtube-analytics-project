@@ -4,20 +4,19 @@ import isodate
 
 from src.channel import Channel
 
-youtube = Channel.get_service()
-
 
 class PlayList:
 
     def __init__(self, playlist_id):
-        self.playlist = youtube.playlistItems().list(playlistId=playlist_id,
+        youtube = Channel.get_service()
+        playlist = youtube.playlistItems().list(playlistId=playlist_id,
                                                      part='contentDetails, snippet'
                                                      ).execute()
-        video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist['items']]
+        video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist['items']]
         self.video_response = youtube.videos().list(part='contentDetails,statistics',
                                                     id=','.join(video_ids)
                                                     ).execute()
-        self.title = self.playlist['items'][0]['snippet']['title'][:24]
+        self.title = playlist['items'][0]['snippet']['title'][:24]
         self.url = "https://www.youtube.com/playlist?list=" + playlist_id
 
     @property

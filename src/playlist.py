@@ -10,8 +10,7 @@ youtube = Channel.get_service()
 class PlayList:
 
     def __init__(self, playlist_id):
-        self.playlist_id = playlist_id
-        self.playlist = youtube.playlistItems().list(playlistId=self.playlist_id,
+        self.playlist = youtube.playlistItems().list(playlistId=playlist_id,
                                                      part='contentDetails, snippet'
                                                      ).execute()
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist['items']]

@@ -36,15 +36,7 @@ class Channel:
         return cls.youtube
 
     def to_json(self, json_file):
-        dict_ = {
-            'id': self.__channel_id,
-            'title': self.title,
-            'description': self.description,
-            'url': self.url,
-            'subscriber_count': self.subscriber_count,
-            'video_count': self.video_count,
-            'view_count': self.view_count,
-        }
+        dict_ = self.__dict__
         with open(json_file, 'w') as file:
             file.write(json.dumps(dict_, indent=2, ensure_ascii=False))
 
